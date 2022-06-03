@@ -85,9 +85,22 @@ function capturardatosFormulario():void{
     }
     listaDeTarea=guardarTarea(tarea)
     document.getElementById("totalTareas").textContent=listaDeTarea.length.toString()
-    let $modalFromularioTarea:HTMLElement=document.getElementById("modalFromularioTarea")
-    let modal:any=bootstrap.Modal.getInstance($modalFromularioTarea)
-    modal.hide()
-    
+    // let $modalFromularioTarea:HTMLElement=document.getElementById("modalFromularioTarea")
+    // let modal:any=bootstrap.Modal.getInstance($modalFromularioTarea)
+    // modal.hide()
 }
+
+function renderisarCartas():void {
+
+}
+
+// function crearCartaTarea():HTMLElement{
+//     let templateCartaHtml:HTMLElement=document.getElementById("templateCartTarea")
+//     let templateCartaHtmlClon:HTMLElement=document.importNode(templateCartaHtml,true)
+//     let cartaHtml:HTMLElement=templateCartaHtmlClon.querySelector(" div.carta")
+//     console.log("hola")
+//     console.log(templateCartaHtmlClon)
+//     return templateCartaHtmlClon
+// }
+// crearCartaTarea()
 
