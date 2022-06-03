@@ -18,6 +18,15 @@ var Tarea = /** @class */ (function () {
     Tarea.prototype.getNombreTarea = function () {
         return this.nombreTarea;
     };
+    Tarea.prototype.getfFechaCreacionTarea = function () {
+        return this.fechaCreacionTarea;
+    };
+    Tarea.prototype.getfFechaInicio = function () {
+        return this.fechaInicio;
+    };
+    Tarea.prototype.getfFechaCierre = function () {
+        return this.fechaCierre;
+    };
     return Tarea;
 }());
 // funciones franmari calle 6
@@ -56,13 +65,17 @@ function capturardatosFormulario() {
     // modal.hide()
 }
 function renderisarCartas() {
+    var fragmento = document.createDocumentFragment();
+    var cartasHTML = listaDeTarea.map(function (tarea) {
+        return crearCartaTarea(tarea);
+    });
 }
-// function crearCartaTarea():HTMLElement{
-//     let templateCartaHtml:HTMLElement=document.getElementById("templateCartTarea")
-//     let templateCartaHtmlClon:HTMLElement=document.importNode(templateCartaHtml,true)
-//     let cartaHtml:HTMLElement=templateCartaHtmlClon.querySelector(" div.carta")
-//     console.log("hola")
-//     console.log(templateCartaHtmlClon)
-//     return templateCartaHtmlClon
-// }
-// crearCartaTarea()
+function crearCartaTarea(datosTarea) {
+    var templateCartaHtml = document.getElementById("templateCartTarea");
+    var carta = templateCartaHtml.content;
+    carta.querySelector(".card-header").textContent = datosTarea.getNombreTarea();
+    carta.querySelector(".card-title").textContent = datosTarea.getNombreTarea();
+    carta.querySelector(".card-text").textContent = "sin descripcion";
+    return carta;
+}
+renderisarCartas();

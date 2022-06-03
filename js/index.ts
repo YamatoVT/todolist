@@ -48,6 +48,18 @@ class Tarea implements TareaInterface {
         return this.nombreTarea
     }
 
+    getfFechaCreacionTarea():string {
+        return this.fechaCreacionTarea
+    }
+
+    getfFechaInicio():string {
+        return this.fechaInicio
+    }
+
+    getfFechaCierre():string {
+        return this.fechaCierre
+    }
+
 }
 
 // funciones franmari calle 6
@@ -91,16 +103,20 @@ function capturardatosFormulario():void{
 }
 
 function renderisarCartas():void {
-
+    let fragmento:DocumentFragment=document.createDocumentFragment()
+    let cartasHTML:Array<DocumentFragment>=listaDeTarea.map( tarea => {
+        return crearCartaTarea(tarea)
+    })
 }
 
-// function crearCartaTarea():HTMLElement{
-//     let templateCartaHtml:HTMLElement=document.getElementById("templateCartTarea")
-//     let templateCartaHtmlClon:HTMLElement=document.importNode(templateCartaHtml,true)
-//     let cartaHtml:HTMLElement=templateCartaHtmlClon.querySelector(" div.carta")
-//     console.log("hola")
-//     console.log(templateCartaHtmlClon)
-//     return templateCartaHtmlClon
-// }
-// crearCartaTarea()
+function crearCartaTarea(datosTarea:Tarea):DocumentFragment{
+    let templateCartaHtml:HTMLTemplateElement=document.getElementById("templateCartTarea") as HTMLTemplateElement
+    let carta:DocumentFragment=templateCartaHtml.content
+    carta.querySelector(".card-header").textContent=datosTarea.getNombreTarea()
+    carta.querySelector(".card-title").textContent=datosTarea.getNombreTarea()
+    carta.querySelector(".card-text").textContent="sin descripcion"
+    return carta
+}
+
+renderisarCartas()
 
