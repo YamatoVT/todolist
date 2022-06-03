@@ -77,8 +77,17 @@ function capturardatosFormulario():void{
     let fecheCierre:string=datosFormulario.get("fecheCierre") as string
     let descripcionTarea:string=datosFormulario.get("descripcionTarea") as string
     let tarea:Tarea=new Tarea(nombreTarea,fechaCreacionTarea,estadoTarea)
-    if(fechaInicio && fecheCierre) tarea.setFechaTarea(fechaInicio,fecheCierre)
-    if(descripcionTarea) tarea.setDescripcionTarea(descripcionTarea)
-    console.log(guardarTarea(tarea))
+    if(fechaInicio && fecheCierre){
+        tarea.setFechaTarea(fechaInicio,fecheCierre)
+    }
+    if(descripcionTarea){
+        tarea.setDescripcionTarea(descripcionTarea)
+    }
+    listaDeTarea=guardarTarea(tarea)
+    document.getElementById("totalTareas").textContent=listaDeTarea.length.toString()
+    let $modalFromularioTarea:HTMLElement=document.getElementById("modalFromularioTarea")
+    let modal:any=bootstrap.Modal.getInstance($modalFromularioTarea)
+    modal.hide()
+    
 }
 

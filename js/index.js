@@ -43,9 +43,15 @@ function capturardatosFormulario() {
     var fecheCierre = datosFormulario.get("fecheCierre");
     var descripcionTarea = datosFormulario.get("descripcionTarea");
     var tarea = new Tarea(nombreTarea, fechaCreacionTarea, estadoTarea);
-    if (fechaInicio && fecheCierre)
+    if (fechaInicio && fecheCierre) {
         tarea.setFechaTarea(fechaInicio, fecheCierre);
-    if (descripcionTarea)
+    }
+    if (descripcionTarea) {
         tarea.setDescripcionTarea(descripcionTarea);
-    console.log(guardarTarea(tarea));
+    }
+    listaDeTarea = guardarTarea(tarea);
+    document.getElementById("totalTareas").textContent = listaDeTarea.length.toString();
+    var $modalFromularioTarea = document.getElementById("modalFromularioTarea");
+    var modal = bootstrap.Modal.getInstance($modalFromularioTarea);
+    modal.hide();
 }

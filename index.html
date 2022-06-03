@@ -9,6 +9,15 @@
 </head>
 <body>
 
+    <header class="bg-danger row p-2 ">
+        <div class=" col-auto ">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">agregar una tarea</button>
+        </div>
+        <div class=" col-auto ">
+            <button class="btn btn-primary" >total de tareas creadas: <span id="totalTareas">-</span></button>
+        </div>
+    </header>
+
     <div class="modal fade" id="modalFromularioTarea" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <section class="modal-dialog modal-sm modal-lg modal-xl" >
             <div class="modal-content">
@@ -18,31 +27,31 @@
                 </header>
                 <section class="modal-body">
                     <form onsubmit="evitarEnviarDatos(this)" class="row" id="fromularioTarea">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
                             <div class=" input-group ">
                                 <label class=" input-group-text" for="nombreTarea">Nombre</label>
                                 <input class=" form-control" type="text" name="nombreTarea" id="nombreTarea" />
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
                             <div class=" input-group">
                                 <label class=" input-group-text" for="fechaCreacionTarea">Fecha de Creacion</label>
                                 <input class=" form-control" type="date" name="fechaCreacionTarea" id="fechaCreacionTarea">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
                             <div class=" input-group ">
                                 <label class=" input-group-text" for="fechaInicio">Fecha Inicio</label>
                                 <input class=" form-control" type="date" name="fechaInicio" id="fechaInicio">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
                             <div class=" input-group">
                                 <label class=" input-group-text" for="fecheCierre">Fecha Fin</label>
                                 <input class=" form-control" type="date" name="fecheCierre" id="fecheCierre">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
                             <div class=" input-group">
                                 <label class=" input-group-text" for="estadoTarea">Estatus de la Tarea</label>
                                 <select class=" form-select" name="estadoTarea" id="estadoTarea">
@@ -68,7 +77,7 @@
         </section>
     </div>
 
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">agregar una tarea</button>
+    
     <button class="btn btn-outline-primary">listar tareas en la cosola</button>
     
     <script src="./css/bootstrap5/js/bootstrap.js"></script>
