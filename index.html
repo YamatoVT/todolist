@@ -9,15 +9,6 @@
 </head>
 <body>
 
-    <header class="bg-danger row p-2 ">
-        <div class=" col-auto ">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">agregar una tarea</button>
-        </div>
-        <div class=" col-auto ">
-            <button class="btn btn-primary" >total de tareas creadas: <span id="totalTareas">-</span></button>
-        </div>
-    </header>
-
     <div class="modal fade" id="modalFromularioTarea" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <section class="modal-dialog modal-sm modal-lg modal-xl" >
             <div class="modal-content">
@@ -77,9 +68,43 @@
         </section>
     </div>
 
-    
-    <button class="btn btn-outline-primary">listar tareas en la cosola</button>
-    
+    <header class="row justify-content-between bg-danger row p-2 mb-4">
+        <div class=" col-auto ">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">agregar una tarea</button>
+        </div>
+        <div class=" col-auto ">
+            <button class="btn btn-primary" >total de tareas creadas: <span id="totalTareas">0</span></button>
+        </div>
+    </header>
+
+    <section class=" container-fluid">
+        <div id="filasCartas" class=" row justify-content-center justify-content-sm-center justify-content-md-start">
+            <div class=" col-auto carta">
+                <div class="card text-white bg-primary mb-3" style="max-width: 20rem; min-width: 20rem;">
+                    <section class="card-header">Header</section>
+                    <section class="card-body">
+                        <h5 class="card-title">Tarea creada en: 28-02-2022</h5>
+                        <p class="card-text">sin Descripcion</p>
+                        <button class="btn btn-info">Ver mas</button>
+                    </section>
+                </div>
+            </div>
+            
+
+        </div>
+    </section>
+    <template id="templateCartTarea">
+        <div class=" col-auto">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem; min-width: 20rem;">
+                <section class="card-header">Header</section>
+                <section class="card-body">
+                    <h5 class="card-title">Tarea creada en: 28-02-2022</h5>
+                    <p class="card-text">sin Descripcion</p>
+                    <button class="btn btn-info">Ver mas</button>
+                </section>
+            </div>
+        </div>
+    </template>
     <script src="./css/bootstrap5/js/bootstrap.js"></script>
     <script src="./js/librerias/moment.js"></script>
     <script src="./js/index.js"></script>
