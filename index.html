@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./css/bootstrap5/css/bootstrap.css" rel="stylesheet" text="text/css"></link>
+</head>
+<body>
+
+    <div class="modal fade" id="modalFromularioTarea" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <section class="modal-dialog modal-sm modal-lg modal-xl" >
+            <div class="modal-content">
+                <header class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </header>
+                <section class="modal-body">
+                    <form onsubmit="evitarEnviarDatos(this)" class="row" id="fromularioTarea">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+                            <div class=" input-group ">
+                                <label class=" input-group-text" for="nombreTarea">Nombre</label>
+                                <input class=" form-control" type="text" name="nombreTarea" id="nombreTarea" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
+                            <div class=" input-group">
+                                <label class=" input-group-text" for="fechaCreacionTarea">Fecha de Creacion</label>
+                                <input class=" form-control" type="date" name="fechaCreacionTarea" id="fechaCreacionTarea">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
+                            <div class=" input-group ">
+                                <label class=" input-group-text" for="fechaInicio">Fecha Inicio</label>
+                                <input class=" form-control" type="date" name="fechaInicio" id="fechaInicio">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
+                            <div class=" input-group">
+                                <label class=" input-group-text" for="fecheCierre">Fecha Fin</label>
+                                <input class=" form-control" type="date" name="fecheCierre" id="fecheCierre">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
+                            <div class=" input-group">
+                                <label class=" input-group-text" for="estadoTarea">Estatus de la Tarea</label>
+                                <select class=" form-select" name="estadoTarea" id="estadoTarea">
+                                    <option value="E">En Espera</option>
+                                    <option value="P">En Proceso</option>
+                                    <option value="T">Termina</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class=" input-group">
+                                <label class=" input-group-text" for="">Descripcion de la tarea</label>
+                                <textarea class=" form-control" name="descripcionTarea" id="descripcionTarea" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="capturardatosFormulario()">Guardar</button>
+                </footer>
+            </div>
+        </section>
+    </div>
+
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">agregar una tarea</button>
+    <button class="btn btn-outline-primary">listar tareas en la cosola</button>
+    
+    <script src="./css/bootstrap5/js/bootstrap.js"></script>
+    <script src="./js/librerias/moment.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
