@@ -1,3 +1,19 @@
+// objetivos del ejercicio
+/**
+ * agregar tarea listo
+ * 
+ * listar tarea listo
+ * 
+ * poder editar la tarea
+ * 
+ * tareas por color 
+ * 
+ * ver todos los datos de la tarea en la carta pero en caso de que la descricion
+ *      sea muy larga acortarla y agregar un boton de ver mas  para ver la descripcion 
+ *      completa
+*/
+
+
 // tipos
 interface TareaInterface{
     nombreTarea:string,
@@ -8,10 +24,6 @@ interface TareaInterface{
     descripcionTarea?:string,
     colorTarea?:string
 }
-
-
-
-
 
 // clases  
 class Tarea implements TareaInterface {
@@ -48,16 +60,20 @@ class Tarea implements TareaInterface {
         return this.nombreTarea
     }
 
-    getfFechaCreacionTarea():string {
+    getFechaCreacionTarea():string {
         return this.fechaCreacionTarea
     }
 
-    getfFechaInicio():string {
+    getFechaInicio():string {
         return this.fechaInicio
     }
 
-    getfFechaCierre():string {
+    getFechaCierre():string {
         return this.fechaCierre
+    }
+
+    getDescripcion():string {
+        return this.descripcionTarea
     }
 
 }
@@ -97,25 +113,29 @@ function capturardatosFormulario():void{
     }
     listaDeTarea=guardarTarea(tarea)
     document.getElementById("totalTareas").textContent=listaDeTarea.length.toString()
-    // let $modalFromularioTarea:HTMLElement=document.getElementById("modalFromularioTarea")
-    // let modal:any=bootstrap.Modal.getInstance($modalFromularioTarea)
-    // modal.hide()
+    renderisarCartas()
 }
 
 function renderisarCartas():void {
+    let $filasCartas:HTMLElement=document.getElementById("filasCartas")
     let fragmento:DocumentFragment=document.createDocumentFragment()
     let cartasHTML:Array<DocumentFragment>=listaDeTarea.map( tarea => {
         return crearCartaTarea(tarea)
     })
+    cartasHTML.map(carta => {
+        fragmento.appendChild(carta)
+    })
+    $filasCartas.appendChild(fragmento)
 }
 
 function crearCartaTarea(datosTarea:Tarea):DocumentFragment{
     let templateCartaHtml:HTMLTemplateElement=document.getElementById("templateCartTarea") as HTMLTemplateElement
     let carta:DocumentFragment=templateCartaHtml.content
     carta.querySelector(".card-header").textContent=datosTarea.getNombreTarea()
-    carta.querySelector(".card-title").textContent=datosTarea.getNombreTarea()
-    carta.querySelector(".card-text").textContent="sin descripcion"
-    return carta
+    carta.querySelector(".card-title").textContent="fecha de creacion: "+datosTarea.getFechaCreacionTarea()
+    carta.querySelector(".card-text").textContent=datosTarea.getDescripcion()
+    let clonCarta:DocumentFragment=document.importNode(carta,true)
+    return clonCarta
 }
 
 renderisarCartas()

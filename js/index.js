@@ -1,3 +1,17 @@
+// objetivos del ejercicio
+/**
+ * agregar tarea listo
+ *
+ * listar tarea listo
+ *
+ * poder editar la tarea
+ *
+ * tareas por color
+ *
+ * ver todos los datos de la tarea en la carta pero en caso de que la descricion
+ *      sea muy larga acortarla y agregar un boton de ver mas  para ver la descripcion
+ *      completa
+*/
 // clases  
 var Tarea = /** @class */ (function () {
     function Tarea(nombreTarea_, fechaCreacionTarea_, estadoTarea_) {
@@ -18,14 +32,17 @@ var Tarea = /** @class */ (function () {
     Tarea.prototype.getNombreTarea = function () {
         return this.nombreTarea;
     };
-    Tarea.prototype.getfFechaCreacionTarea = function () {
+    Tarea.prototype.getFechaCreacionTarea = function () {
         return this.fechaCreacionTarea;
     };
-    Tarea.prototype.getfFechaInicio = function () {
+    Tarea.prototype.getFechaInicio = function () {
         return this.fechaInicio;
     };
-    Tarea.prototype.getfFechaCierre = function () {
+    Tarea.prototype.getFechaCierre = function () {
         return this.fechaCierre;
+    };
+    Tarea.prototype.getDescripcion = function () {
+        return this.descripcionTarea;
     };
     return Tarea;
 }());
@@ -60,22 +77,26 @@ function capturardatosFormulario() {
     }
     listaDeTarea = guardarTarea(tarea);
     document.getElementById("totalTareas").textContent = listaDeTarea.length.toString();
-    // let $modalFromularioTarea:HTMLElement=document.getElementById("modalFromularioTarea")
-    // let modal:any=bootstrap.Modal.getInstance($modalFromularioTarea)
-    // modal.hide()
+    renderisarCartas();
 }
 function renderisarCartas() {
+    var $filasCartas = document.getElementById("filasCartas");
     var fragmento = document.createDocumentFragment();
     var cartasHTML = listaDeTarea.map(function (tarea) {
         return crearCartaTarea(tarea);
     });
+    cartasHTML.map(function (carta) {
+        fragmento.appendChild(carta);
+    });
+    $filasCartas.appendChild(fragmento);
 }
 function crearCartaTarea(datosTarea) {
     var templateCartaHtml = document.getElementById("templateCartTarea");
     var carta = templateCartaHtml.content;
     carta.querySelector(".card-header").textContent = datosTarea.getNombreTarea();
-    carta.querySelector(".card-title").textContent = datosTarea.getNombreTarea();
-    carta.querySelector(".card-text").textContent = "sin descripcion";
-    return carta;
+    carta.querySelector(".card-title").textContent = "fecha de creacion: " + datosTarea.getFechaCreacionTarea();
+    carta.querySelector(".card-text").textContent = datosTarea.getDescripcion();
+    var clonCarta = document.importNode(carta, true);
+    return clonCarta;
 }
 renderisarCartas();
