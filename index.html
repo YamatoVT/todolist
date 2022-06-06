@@ -13,7 +13,7 @@
         <section class="modal-dialog modal-sm modal-lg modal-xl" >
             <div class="modal-content">
                 <header class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulario Tarea</h5>
+                    <h3 class="modal-title" id="exampleModalLabel">Formulario Tarea</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </header>
                 <section class="modal-body">
@@ -24,22 +24,10 @@
                                 <input class=" form-control" type="text" name="nombreTarea" id="nombreTarea" />
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
                             <div class=" input-group">
                                 <label class=" input-group-text" for="fechaCreacionTarea">Fecha de Creacion</label>
                                 <input class=" form-control" type="date" name="fechaCreacionTarea" id="fechaCreacionTarea">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
-                            <div class=" input-group ">
-                                <label class=" input-group-text" for="fechaInicio">Fecha Inicio</label>
-                                <input class=" form-control" type="date" name="fechaInicio" id="fechaInicio">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
-                            <div class=" input-group">
-                                <label class=" input-group-text" for="fecheCierre">Fecha Fin</label>
-                                <input class=" form-control" type="date" name="fecheCierre" id="fecheCierre">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
@@ -52,10 +40,23 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-4">
                             <div class=" input-group">
                                 <label class=" input-group-text" for="">Descripcion de la tarea</label>
                                 <textarea class=" form-control" name="descripcionTarea" id="descripcionTarea" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-4">
+                            <div class=" input-group">
+                                <label class=" input-group-text" for="colorTarea">Color</label>
+                                <select class=" form-select" name="colorTarea" id="colorTarea">
+                                    <option value="">Sin color</option>
+                                    <option value="primary">Azul</option>
+                                    <option value="danger">Rojo</option>
+                                    <option value="warning">Amarillo</option>
+                                    <option value="success">Verde</option>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -82,14 +83,16 @@
         <!-- insertar cartas tareas -->
         </div>
     </section>
+
     <template id="templateCartTarea">
         <div class=" col-auto">
-            <div class="card text-white bg-primary mb-3" style="max-width: 20rem; min-width: 20rem;">
+            <div class="card text-white mb-3" style="max-width: 20rem; min-width: 20rem;">
                 <section class="card-header">Header</section>
                 <section class="card-body">
                     <h5 class="card-title">Tarea creada en: xx-xx-xxxx</h5>
-                    <p class="card-text">sin Descripcion</p>
-                    <button class="btn btn-info">Ver mas</button>
+                    <p class="card-text parrafo-carta">sin Descripcion</p>
+                    <p class="card-text estado-tarea">sin Descripcion</p>
+                    <button class="btn btn-info boton-editar" id="">Editar</button>
                 </section>
             </div>
         </div>
