@@ -1,12 +1,7 @@
 // objetivos del ejercicio
 /**
- * agregar tarea listo
- * 
- * listar tarea listo
  * 
  * poder editar la tarea
- * 
- * tareas por color 
  * 
  * ver todos los datos de la tarea en la carta pero en caso de que la descricion
  *      sea muy larga acortarla y agregar un boton de ver mas  para ver la descripcion 
@@ -18,8 +13,6 @@
 interface TareaInterface{
     nombreTarea:string,
     fechaCreacionTarea:string
-    fechaInicio?:string,
-    fecheCierre?:string,
     estadoTarea:string,
     descripcionTarea?:string,
     colorTarea?:string
@@ -30,8 +23,6 @@ class Tarea implements TareaInterface {
 
     nombreTarea:string
     fechaCreacionTarea:string
-    fechaCierre:string
-    fechaInicio:string
     estadoTarea:string
     descripcionTarea:string
     colorTarea:string
@@ -47,10 +38,6 @@ class Tarea implements TareaInterface {
         this.colorTarea=color_
     }
 
-    setFechaTarea(fecha_inicio:string,fecha_cierre:string):void{
-        this.fechaInicio=fecha_inicio
-        this.fechaCierre=fecha_cierre
-    }
 
     setDescripcionTarea(descipcion:string):void{
         this.descripcionTarea=descipcion
@@ -64,22 +51,28 @@ class Tarea implements TareaInterface {
         return this.fechaCreacionTarea
     }
 
-    getFechaInicio():string {
-        return this.fechaInicio
-    }
-
-    getFechaCierre():string {
-        return this.fechaCierre
-    }
-
     getDescripcion():string {
         return this.descripcionTarea
+    }
+
+    getColorTarea():string{
+        return this.colorTarea
+    }
+
+    getEstadoTarea():string {
+        return this.estadoTarea
     }
 
 }
 
 // funciones franmari calle 6
 let listaDeTarea:Array<Tarea>=[]
+
+let tiposEstatusTarea:Object={
+    E:"En Espera",
+    P:"En Proceso",
+    T:"Terminado"
+}
 
 function evitarEnviarDatos(a:Event):void{
     a.preventDefault()
@@ -101,26 +94,26 @@ function capturardatosFormulario():void{
     let nombreTarea:string=datosFormulario.get("nombreTarea") as string
     let fechaCreacionTarea:string=datosFormulario.get("fechaCreacionTarea") as string
     let estadoTarea:string=datosFormulario.get("estadoTarea") as string
-    let fechaInicio:string=datosFormulario.get("fechaInicio") as string
-    let fecheCierre:string=datosFormulario.get("fecheCierre") as string
-    let descripcionTarea:string=datosFormulario.get("descripcionTarea") as string
-    let tarea:Tarea=new Tarea(nombreTarea,fechaCreacionTarea,estadoTarea)
-    if(fechaInicio && fecheCierre){
-        tarea.setFechaTarea(fechaInicio,fecheCierre)
-    }
-    if(descripcionTarea){
+    let descripcionTarea:string=datosFormulario.get("descripcionTarea") as string || "null"
+    let colorTarea:string=datosFormulario.get("colorTarea") as string || "secondary"
+    if(nombreTarea && fechaCreacionTarea){
+        let tarea:Tarea=new Tarea(nombreTarea,fechaCreacionTarea,estadoTarea)
         tarea.setDescripcionTarea(descripcionTarea)
+        tarea.setColorTarea(colorTarea)
+        listaDeTarea=guardarTarea(tarea)
+        document.getElementById("totalTareas").textContent=listaDeTarea.length.toString()
+        renderisarCartas()
     }
-    listaDeTarea=guardarTarea(tarea)
-    document.getElementById("totalTareas").textContent=listaDeTarea.length.toString()
-    renderisarCartas()
+    // else{
+    // }
 }
 
 function renderisarCartas():void {
     let $filasCartas:HTMLElement=document.getElementById("filasCartas")
     let fragmento:DocumentFragment=document.createDocumentFragment()
-    let cartasHTML:Array<DocumentFragment>=listaDeTarea.map( tarea => {
-        return crearCartaTarea(tarea)
+    $filasCartas.innerHTML=""
+    let cartasHTML:Array<DocumentFragment>=listaDeTarea.map( (tarea, index )=> {
+        return crearCartaTarea(tarea, index)
     })
     cartasHTML.map(carta => {
         fragmento.appendChild(carta)
@@ -128,13 +121,18 @@ function renderisarCartas():void {
     $filasCartas.appendChild(fragmento)
 }
 
-function crearCartaTarea(datosTarea:Tarea):DocumentFragment{
+function crearCartaTarea(datosTarea:Tarea,index:number):DocumentFragment{
     let templateCartaHtml:HTMLTemplateElement=document.getElementById("templateCartTarea") as HTMLTemplateElement
     let carta:DocumentFragment=templateCartaHtml.content
+    carta.querySelector("div.card").classList.add("bg-"+datosTarea.getColorTarea())
     carta.querySelector(".card-header").textContent=datosTarea.getNombreTarea()
     carta.querySelector(".card-title").textContent="fecha de creacion: "+datosTarea.getFechaCreacionTarea()
-    carta.querySelector(".card-text").textContent=datosTarea.getDescripcion()
+    carta.querySelector(".parrafo-carta").textContent=datosTarea.getDescripcion()
+    carta.querySelector(".estado-tarea").textContent="Estatus: "+tiposEstatusTarea[datosTarea.getEstadoTarea()] as string
+    let id: string = (index as unknown) as string
+    carta.querySelector(".boton-editar").setAttribute("id",id)
     let clonCarta:DocumentFragment=document.importNode(carta,true)
+    carta.querySelector("div.card").classList.remove("bg-"+datosTarea.getColorTarea())
     return clonCarta
 }
 

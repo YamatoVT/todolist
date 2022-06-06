@@ -1,12 +1,7 @@
 // objetivos del ejercicio
 /**
- * agregar tarea listo
- *
- * listar tarea listo
  *
  * poder editar la tarea
- *
- * tareas por color
  *
  * ver todos los datos de la tarea en la carta pero en caso de que la descricion
  *      sea muy larga acortarla y agregar un boton de ver mas  para ver la descripcion
@@ -22,10 +17,6 @@ var Tarea = /** @class */ (function () {
     Tarea.prototype.setColorTarea = function (color_) {
         this.colorTarea = color_;
     };
-    Tarea.prototype.setFechaTarea = function (fecha_inicio, fecha_cierre) {
-        this.fechaInicio = fecha_inicio;
-        this.fechaCierre = fecha_cierre;
-    };
     Tarea.prototype.setDescripcionTarea = function (descipcion) {
         this.descripcionTarea = descipcion;
     };
@@ -35,19 +26,24 @@ var Tarea = /** @class */ (function () {
     Tarea.prototype.getFechaCreacionTarea = function () {
         return this.fechaCreacionTarea;
     };
-    Tarea.prototype.getFechaInicio = function () {
-        return this.fechaInicio;
-    };
-    Tarea.prototype.getFechaCierre = function () {
-        return this.fechaCierre;
-    };
     Tarea.prototype.getDescripcion = function () {
         return this.descripcionTarea;
+    };
+    Tarea.prototype.getColorTarea = function () {
+        return this.colorTarea;
+    };
+    Tarea.prototype.getEstadoTarea = function () {
+        return this.estadoTarea;
     };
     return Tarea;
 }());
 // funciones franmari calle 6
 var listaDeTarea = [];
+var tiposEstatusTarea = {
+    E: "En Espera",
+    P: "En Proceso",
+    T: "Terminado"
+};
 function evitarEnviarDatos(a) {
     a.preventDefault();
 }
@@ -65,38 +61,43 @@ function capturardatosFormulario() {
     var nombreTarea = datosFormulario.get("nombreTarea");
     var fechaCreacionTarea = datosFormulario.get("fechaCreacionTarea");
     var estadoTarea = datosFormulario.get("estadoTarea");
-    var fechaInicio = datosFormulario.get("fechaInicio");
-    var fecheCierre = datosFormulario.get("fecheCierre");
-    var descripcionTarea = datosFormulario.get("descripcionTarea");
-    var tarea = new Tarea(nombreTarea, fechaCreacionTarea, estadoTarea);
-    if (fechaInicio && fecheCierre) {
-        tarea.setFechaTarea(fechaInicio, fecheCierre);
-    }
-    if (descripcionTarea) {
+    var descripcionTarea = datosFormulario.get("descripcionTarea") || "null";
+    var colorTarea = datosFormulario.get("colorTarea") || "secondary";
+    if (nombreTarea && fechaCreacionTarea) {
+        var tarea = new Tarea(nombreTarea, fechaCreacionTarea, estadoTarea);
         tarea.setDescripcionTarea(descripcionTarea);
+        tarea.setColorTarea(colorTarea);
+        listaDeTarea = guardarTarea(tarea);
+        document.getElementById("totalTareas").textContent = listaDeTarea.length.toString();
+        renderisarCartas();
     }
-    listaDeTarea = guardarTarea(tarea);
-    document.getElementById("totalTareas").textContent = listaDeTarea.length.toString();
-    renderisarCartas();
+    // else{
+    // }
 }
 function renderisarCartas() {
     var $filasCartas = document.getElementById("filasCartas");
     var fragmento = document.createDocumentFragment();
-    var cartasHTML = listaDeTarea.map(function (tarea) {
-        return crearCartaTarea(tarea);
+    $filasCartas.innerHTML = "";
+    var cartasHTML = listaDeTarea.map(function (tarea, index) {
+        return crearCartaTarea(tarea, index);
     });
     cartasHTML.map(function (carta) {
         fragmento.appendChild(carta);
     });
     $filasCartas.appendChild(fragmento);
 }
-function crearCartaTarea(datosTarea) {
+function crearCartaTarea(datosTarea, index) {
     var templateCartaHtml = document.getElementById("templateCartTarea");
     var carta = templateCartaHtml.content;
+    carta.querySelector("div.card").classList.add("bg-" + datosTarea.getColorTarea());
     carta.querySelector(".card-header").textContent = datosTarea.getNombreTarea();
     carta.querySelector(".card-title").textContent = "fecha de creacion: " + datosTarea.getFechaCreacionTarea();
-    carta.querySelector(".card-text").textContent = datosTarea.getDescripcion();
+    carta.querySelector(".parrafo-carta").textContent = datosTarea.getDescripcion();
+    carta.querySelector(".estado-tarea").textContent = "Estatus: " + tiposEstatusTarea[datosTarea.getEstadoTarea()];
+    var id = index;
+    carta.querySelector(".boton-editar").setAttribute("id", id);
     var clonCarta = document.importNode(carta, true);
+    carta.querySelector("div.card").classList.remove("bg-" + datosTarea.getColorTarea());
     return clonCarta;
 }
 renderisarCartas();
