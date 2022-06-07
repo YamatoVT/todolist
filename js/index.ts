@@ -104,8 +104,30 @@ function capturardatosFormulario():void{
         document.getElementById("totalTareas").textContent=listaDeTarea.length.toString()
         renderisarCartas()
     }
-    // else{
-    // }
+    limpiarFormulario()
+}
+
+function prepararFromularioAntesDeEditar(a:HTMLElement):void{
+    limpiarFormulario()
+    alert(a.id)
+}
+
+function limpiarFormulario():void{
+    limpiarCampo("nombreTarea")
+    limpiarCampo("fechaCreacionTarea")
+    limpiarCampo("estadoTarea","E")
+    limpiarCampo("descripcionTarea")
+    limpiarCampo("colorTarea")
+}
+
+function limpiarCampo(nombreCampo:string,valorDefault?:string):void{
+    let campo:HTMLInputElement = document.getElementById(nombreCampo) as HTMLInputElement
+    if(valorDefault){
+        campo.value=valorDefault
+    }
+    else{
+        campo.value=""
+    }
 }
 
 function renderisarCartas():void {
@@ -131,6 +153,7 @@ function crearCartaTarea(datosTarea:Tarea,index:number):DocumentFragment{
     carta.querySelector(".estado-tarea").textContent="Estatus: "+tiposEstatusTarea[datosTarea.getEstadoTarea()] as string
     let id: string = (index as unknown) as string
     carta.querySelector(".boton-editar").setAttribute("id",id)
+    carta.querySelector(".boton-editar").setAttribute("onclick","prepararFromularioAntesDeEditar(this)")
     let clonCarta:DocumentFragment=document.importNode(carta,true)
     carta.querySelector("div.card").classList.remove("bg-"+datosTarea.getColorTarea())
     return clonCarta

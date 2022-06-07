@@ -71,8 +71,27 @@ function capturardatosFormulario() {
         document.getElementById("totalTareas").textContent = listaDeTarea.length.toString();
         renderisarCartas();
     }
-    // else{
-    // }
+    limpiarFormulario();
+}
+function prepararFromularioAntesDeEditar(a) {
+    limpiarFormulario();
+    alert(a.id);
+}
+function limpiarFormulario() {
+    limpiarCampo("nombreTarea");
+    limpiarCampo("fechaCreacionTarea");
+    limpiarCampo("estadoTarea", "E");
+    limpiarCampo("descripcionTarea");
+    limpiarCampo("colorTarea");
+}
+function limpiarCampo(nombreCampo, valorDefault) {
+    var campo = document.getElementById(nombreCampo);
+    if (valorDefault) {
+        campo.value = valorDefault;
+    }
+    else {
+        campo.value = "";
+    }
 }
 function renderisarCartas() {
     var $filasCartas = document.getElementById("filasCartas");
@@ -96,6 +115,7 @@ function crearCartaTarea(datosTarea, index) {
     carta.querySelector(".estado-tarea").textContent = "Estatus: " + tiposEstatusTarea[datosTarea.getEstadoTarea()];
     var id = index;
     carta.querySelector(".boton-editar").setAttribute("id", id);
+    carta.querySelector(".boton-editar").setAttribute("onclick", "prepararFromularioAntesDeEditar(this)");
     var clonCarta = document.importNode(carta, true);
     carta.querySelector("div.card").classList.remove("bg-" + datosTarea.getColorTarea());
     return clonCarta;

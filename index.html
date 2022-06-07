@@ -71,7 +71,7 @@
 
     <header class="row justify-content-between bg-danger row p-2 mb-4">
         <div class=" col-auto ">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">agregar una tarea</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea" onclick="limpiarFormulario()">agregar una tarea</button>
         </div>
         <div class=" col-auto ">
             <button class="btn btn-primary" >total de tareas creadas: <span id="totalTareas">0</span></button>
@@ -92,11 +92,12 @@
                     <h5 class="card-title">Tarea creada en: xx-xx-xxxx</h5>
                     <p class="card-text parrafo-carta">sin Descripcion</p>
                     <p class="card-text estado-tarea">sin Descripcion</p>
-                    <button class="btn btn-info boton-editar" id="">Editar</button>
+                    <button class="btn btn-info boton-editar" id="" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea">Editar</button>
                 </section>
             </div>
         </div>
     </template>
+
     <script src="./css/bootstrap5/js/bootstrap.js"></script>
     <script src="./js/librerias/moment.js"></script>
     <script src="./js/index.js"></script>
