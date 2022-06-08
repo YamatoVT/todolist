@@ -1,14 +1,3 @@
-// objetivos del ejercicio
-/**
- * 
- * poder editar la tarea
- * 
- * ver todos los datos de la tarea en la carta pero en caso de que la descricion
- *      sea muy larga acortarla y agregar un boton de ver mas  para ver la descripcion 
- *      completa
-*/
-
-
 // tipos
 interface TareaInterface{
     nombreTarea:string,
@@ -134,7 +123,7 @@ function capturardatosFormularioEditar(a:HTMLElement):void{
         tarea.setEstadoTarea(estadoTarea)
         tarea.setDescripcionTarea(descripcionTarea)
         tarea.setColorTarea(colorTarea)
-        listaDeTarea[a.id]=tarea
+        listaDeTarea[a.getAttribute("data-id-tarea")]=tarea
         renderisarCartas()
     }
     limpiarFormulario()
@@ -155,18 +144,29 @@ function prepararFromularioAntesDeEditar(a:HTMLElement):void{
     let estadoTarea:HTMLInputElement=document.getElementById("estadoTarea") as HTMLInputElement
     let descripcionTarea:HTMLInputElement=document.getElementById("descripcionTarea") as HTMLInputElement
     let colorTarea:HTMLInputElement=document.getElementById("colorTarea") as HTMLInputElement
-    let Tarea:Tarea=Object.assign(listaDeTarea[a.id])
+    let Tarea:Tarea=Object.assign(listaDeTarea[a.getAttribute("data-id-tarea")])
     let botonEditarFormulario:HTMLElement=document.getElementById("botonEditarFormulario")
     let botonGuardarFormulario:HTMLElement=document.getElementById("botonGuardarFormulario")
     botonGuardarFormulario.classList.add("ocultar")
     botonEditarFormulario.classList.remove("ocultar")
-    botonEditarFormulario.setAttribute("data-id-tarea",a.id)
+    botonEditarFormulario.setAttribute("data-id-tarea",a.getAttribute("data-id-tarea"))
     nombreTarea.value=Tarea.getNombreTarea()
     fechaCreacionTarea.value=Tarea.getFechaCreacionTarea()
     descripcionTarea.value=Tarea.getDescripcion()
     colorTarea.value=Tarea.getColorTarea()
     estadoTarea.value=Tarea.getEstadoTarea()
     console.log("datos de la tarea a editar =>>> ",Tarea)
+}
+
+function prepararModalEliminar(a:HTMLElement):void{
+    let $botonEliminarTarea:HTMLElement=document.getElementById("botonEliminarTarea")
+    $botonEliminarTarea.setAttribute("data-id-tarea",a.getAttribute("data-id-tarea"))
+}
+
+function eliminarTarea(a:HTMLElement):void{
+    listaDeTarea=listaDeTarea.filter((tarea: Tarea, index: number) => index!=parseInt(a.getAttribute("data-id-tarea")))
+    console.log("actulizacion de la lista =>> ",listaDeTarea)
+    renderisarCartas()
 }
 
 function limpiarFormulario():void{
@@ -209,8 +209,8 @@ function crearCartaTarea(datosTarea:Tarea,index:number):DocumentFragment{
     carta.querySelector(".parrafo-carta").textContent=datosTarea.getDescripcion()
     carta.querySelector(".estado-tarea").textContent="Estatus: "+tiposEstatusTarea[datosTarea.getEstadoTarea()] as string
     let id: string = (index as unknown) as string
-    carta.querySelector(".boton-editar").setAttribute("id",id)
-    carta.querySelector(".boton-editar").setAttribute("onclick","prepararFromularioAntesDeEditar(this)")
+    carta.querySelector(".boton-editar").setAttribute("data-id-tarea",id)
+    carta.querySelector(".boton-eliminar").setAttribute("data-id-tarea",id)
     let clonCarta:DocumentFragment=document.importNode(carta,true)
     carta.querySelector("div.card").classList.remove("bg-"+datosTarea.getColorTarea())
     return clonCarta

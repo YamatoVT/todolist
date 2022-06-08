@@ -1,12 +1,3 @@
-// objetivos del ejercicio
-/**
- *
- * poder editar la tarea
- *
- * ver todos los datos de la tarea en la carta pero en caso de que la descricion
- *      sea muy larga acortarla y agregar un boton de ver mas  para ver la descripcion
- *      completa
-*/
 // clases  
 var Tarea = /** @class */ (function () {
     function Tarea(nombreTarea_, fechaCreacionTarea_, estadoTarea_) {
@@ -97,7 +88,7 @@ function capturardatosFormularioEditar(a) {
         tarea.setEstadoTarea(estadoTarea);
         tarea.setDescripcionTarea(descripcionTarea);
         tarea.setColorTarea(colorTarea);
-        listaDeTarea[a.id] = tarea;
+        listaDeTarea[a.getAttribute("data-id-tarea")] = tarea;
         renderisarCartas();
     }
     limpiarFormulario();
@@ -116,18 +107,27 @@ function prepararFromularioAntesDeEditar(a) {
     var estadoTarea = document.getElementById("estadoTarea");
     var descripcionTarea = document.getElementById("descripcionTarea");
     var colorTarea = document.getElementById("colorTarea");
-    var Tarea = Object.assign(listaDeTarea[a.id]);
+    var Tarea = Object.assign(listaDeTarea[a.getAttribute("data-id-tarea")]);
     var botonEditarFormulario = document.getElementById("botonEditarFormulario");
     var botonGuardarFormulario = document.getElementById("botonGuardarFormulario");
     botonGuardarFormulario.classList.add("ocultar");
     botonEditarFormulario.classList.remove("ocultar");
-    botonEditarFormulario.setAttribute("data-id-tarea", a.id);
+    botonEditarFormulario.setAttribute("data-id-tarea", a.getAttribute("data-id-tarea"));
     nombreTarea.value = Tarea.getNombreTarea();
     fechaCreacionTarea.value = Tarea.getFechaCreacionTarea();
     descripcionTarea.value = Tarea.getDescripcion();
     colorTarea.value = Tarea.getColorTarea();
     estadoTarea.value = Tarea.getEstadoTarea();
     console.log("datos de la tarea a editar =>>> ", Tarea);
+}
+function prepararModalEliminar(a) {
+    var $botonEliminarTarea = document.getElementById("botonEliminarTarea");
+    $botonEliminarTarea.setAttribute("data-id-tarea", a.getAttribute("data-id-tarea"));
+}
+function eliminarTarea(a) {
+    listaDeTarea = listaDeTarea.filter(function (tarea, index) { return index != parseInt(a.getAttribute("data-id-tarea")); });
+    console.log("actulizacion de la lista =>> ", listaDeTarea);
+    renderisarCartas();
 }
 function limpiarFormulario() {
     campo("nombreTarea");
@@ -166,8 +166,8 @@ function crearCartaTarea(datosTarea, index) {
     carta.querySelector(".parrafo-carta").textContent = datosTarea.getDescripcion();
     carta.querySelector(".estado-tarea").textContent = "Estatus: " + tiposEstatusTarea[datosTarea.getEstadoTarea()];
     var id = index;
-    carta.querySelector(".boton-editar").setAttribute("id", id);
-    carta.querySelector(".boton-editar").setAttribute("onclick", "prepararFromularioAntesDeEditar(this)");
+    carta.querySelector(".boton-editar").setAttribute("data-id-tarea", id);
+    carta.querySelector(".boton-eliminar").setAttribute("data-id-tarea", id);
     var clonCarta = document.importNode(carta, true);
     carta.querySelector("div.card").classList.remove("bg-" + datosTarea.getColorTarea());
     return clonCarta;
