@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="./css/bootstrap5/css/bootstrap.css" rel="stylesheet" text="text/css"></link>
+    <style>
+        .ocultar{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -63,7 +68,8 @@
                 </section>
                 <footer class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="capturardatosFormulario()">Guardar</button>
+                    <button id="botonGuardarFormulario" type="button" class="btn btn-primary " onclick="capturardatosFormulario()">Guardar</button>
+                    <button id="botonEditarFormulario" data-id-tarea="" type="button" class="btn btn-warning ocultar " onclick="capturardatosFormularioEditar(this)">Editar</button>
                 </footer>
             </div>
         </section>
@@ -71,7 +77,7 @@
 
     <header class="row justify-content-between bg-danger row p-2 mb-4">
         <div class=" col-auto ">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea" onclick="limpiarFormulario()">agregar una tarea</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFromularioTarea" onclick="prepararFromularioAntesDeGuardar()">agregar una tarea</button>
         </div>
         <div class=" col-auto ">
             <button class="btn btn-primary" >total de tareas creadas: <span id="totalTareas">0</span></button>

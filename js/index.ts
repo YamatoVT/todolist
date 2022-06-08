@@ -34,6 +34,18 @@ class Tarea implements TareaInterface {
         this.estadoTarea=estadoTarea_
     }
 
+    setNombreTarea(nombreTarea_:string):void{
+        this.nombreTarea=nombreTarea_
+    }
+
+    setFechaCreacionTarea(fechaCreacionTarea_:string):void{
+        this.fechaCreacionTarea=fechaCreacionTarea_
+    }
+
+    setEstadoTarea(estadoTarea_:string):void{
+        this.estadoTarea=estadoTarea_
+    }
+
     setColorTarea(color_:string):void{
         this.colorTarea=color_
     }
@@ -107,20 +119,65 @@ function capturardatosFormulario():void{
     limpiarFormulario()
 }
 
+function capturardatosFormularioEditar(a:HTMLElement):void{
+    let formulario:HTMLFormElement=document.getElementById("fromularioTarea") as HTMLFormElement
+    let datosFormulario:FormData=new FormData(formulario)
+    let nombreTarea:string=datosFormulario.get("nombreTarea") as string
+    let fechaCreacionTarea:string=datosFormulario.get("fechaCreacionTarea") as string
+    let estadoTarea:string=datosFormulario.get("estadoTarea") as string
+    let descripcionTarea:string=datosFormulario.get("descripcionTarea") as string || "null"
+    let colorTarea:string=datosFormulario.get("colorTarea") as string || "secondary"
+    let tarea:Tarea=Object.assign(listaDeTarea[a.getAttribute("data-id-tarea")])
+    if(nombreTarea && fechaCreacionTarea){
+        tarea.setNombreTarea(nombreTarea)
+        tarea.setFechaCreacionTarea(fechaCreacionTarea)
+        tarea.setEstadoTarea(estadoTarea)
+        tarea.setDescripcionTarea(descripcionTarea)
+        tarea.setColorTarea(colorTarea)
+        listaDeTarea[a.id]=tarea
+        renderisarCartas()
+    }
+    limpiarFormulario()
+}
+
+function prepararFromularioAntesDeGuardar():void{
+    limpiarFormulario()
+    let botonEditarFormulario:HTMLElement=document.getElementById("botonEditarFormulario")
+    let botonGuardarFormulario:HTMLElement=document.getElementById("botonGuardarFormulario")
+    botonGuardarFormulario.classList.remove("ocultar")
+    botonEditarFormulario.classList.add("ocultar")
+}
+
 function prepararFromularioAntesDeEditar(a:HTMLElement):void{
     limpiarFormulario()
-    alert(a.id)
+    let nombreTarea:HTMLInputElement=document.getElementById("nombreTarea") as HTMLInputElement
+    let fechaCreacionTarea:HTMLInputElement=document.getElementById("fechaCreacionTarea") as HTMLInputElement
+    let estadoTarea:HTMLInputElement=document.getElementById("estadoTarea") as HTMLInputElement
+    let descripcionTarea:HTMLInputElement=document.getElementById("descripcionTarea") as HTMLInputElement
+    let colorTarea:HTMLInputElement=document.getElementById("colorTarea") as HTMLInputElement
+    let Tarea:Tarea=Object.assign(listaDeTarea[a.id])
+    let botonEditarFormulario:HTMLElement=document.getElementById("botonEditarFormulario")
+    let botonGuardarFormulario:HTMLElement=document.getElementById("botonGuardarFormulario")
+    botonGuardarFormulario.classList.add("ocultar")
+    botonEditarFormulario.classList.remove("ocultar")
+    botonEditarFormulario.setAttribute("data-id-tarea",a.id)
+    nombreTarea.value=Tarea.getNombreTarea()
+    fechaCreacionTarea.value=Tarea.getFechaCreacionTarea()
+    descripcionTarea.value=Tarea.getDescripcion()
+    colorTarea.value=Tarea.getColorTarea()
+    estadoTarea.value=Tarea.getEstadoTarea()
+    console.log("datos de la tarea a editar =>>> ",Tarea)
 }
 
 function limpiarFormulario():void{
-    limpiarCampo("nombreTarea")
-    limpiarCampo("fechaCreacionTarea")
-    limpiarCampo("estadoTarea","E")
-    limpiarCampo("descripcionTarea")
-    limpiarCampo("colorTarea")
+    campo("nombreTarea")
+    campo("fechaCreacionTarea")
+    campo("estadoTarea","E")
+    campo("descripcionTarea")
+    campo("colorTarea","primary")
 }
 
-function limpiarCampo(nombreCampo:string,valorDefault?:string):void{
+function campo(nombreCampo:string,valorDefault?:string):void{
     let campo:HTMLInputElement = document.getElementById(nombreCampo) as HTMLInputElement
     if(valorDefault){
         campo.value=valorDefault

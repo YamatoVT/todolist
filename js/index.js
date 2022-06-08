@@ -14,6 +14,15 @@ var Tarea = /** @class */ (function () {
         this.fechaCreacionTarea = fechaCreacionTarea_;
         this.estadoTarea = estadoTarea_;
     }
+    Tarea.prototype.setNombreTarea = function (nombreTarea_) {
+        this.nombreTarea = nombreTarea_;
+    };
+    Tarea.prototype.setFechaCreacionTarea = function (fechaCreacionTarea_) {
+        this.fechaCreacionTarea = fechaCreacionTarea_;
+    };
+    Tarea.prototype.setEstadoTarea = function (estadoTarea_) {
+        this.estadoTarea = estadoTarea_;
+    };
     Tarea.prototype.setColorTarea = function (color_) {
         this.colorTarea = color_;
     };
@@ -73,18 +82,61 @@ function capturardatosFormulario() {
     }
     limpiarFormulario();
 }
+function capturardatosFormularioEditar(a) {
+    var formulario = document.getElementById("fromularioTarea");
+    var datosFormulario = new FormData(formulario);
+    var nombreTarea = datosFormulario.get("nombreTarea");
+    var fechaCreacionTarea = datosFormulario.get("fechaCreacionTarea");
+    var estadoTarea = datosFormulario.get("estadoTarea");
+    var descripcionTarea = datosFormulario.get("descripcionTarea") || "null";
+    var colorTarea = datosFormulario.get("colorTarea") || "secondary";
+    var tarea = Object.assign(listaDeTarea[a.getAttribute("data-id-tarea")]);
+    if (nombreTarea && fechaCreacionTarea) {
+        tarea.setNombreTarea(nombreTarea);
+        tarea.setFechaCreacionTarea(fechaCreacionTarea);
+        tarea.setEstadoTarea(estadoTarea);
+        tarea.setDescripcionTarea(descripcionTarea);
+        tarea.setColorTarea(colorTarea);
+        listaDeTarea[a.id] = tarea;
+        renderisarCartas();
+    }
+    limpiarFormulario();
+}
+function prepararFromularioAntesDeGuardar() {
+    limpiarFormulario();
+    var botonEditarFormulario = document.getElementById("botonEditarFormulario");
+    var botonGuardarFormulario = document.getElementById("botonGuardarFormulario");
+    botonGuardarFormulario.classList.remove("ocultar");
+    botonEditarFormulario.classList.add("ocultar");
+}
 function prepararFromularioAntesDeEditar(a) {
     limpiarFormulario();
-    alert(a.id);
+    var nombreTarea = document.getElementById("nombreTarea");
+    var fechaCreacionTarea = document.getElementById("fechaCreacionTarea");
+    var estadoTarea = document.getElementById("estadoTarea");
+    var descripcionTarea = document.getElementById("descripcionTarea");
+    var colorTarea = document.getElementById("colorTarea");
+    var Tarea = Object.assign(listaDeTarea[a.id]);
+    var botonEditarFormulario = document.getElementById("botonEditarFormulario");
+    var botonGuardarFormulario = document.getElementById("botonGuardarFormulario");
+    botonGuardarFormulario.classList.add("ocultar");
+    botonEditarFormulario.classList.remove("ocultar");
+    botonEditarFormulario.setAttribute("data-id-tarea", a.id);
+    nombreTarea.value = Tarea.getNombreTarea();
+    fechaCreacionTarea.value = Tarea.getFechaCreacionTarea();
+    descripcionTarea.value = Tarea.getDescripcion();
+    colorTarea.value = Tarea.getColorTarea();
+    estadoTarea.value = Tarea.getEstadoTarea();
+    console.log("datos de la tarea a editar =>>> ", Tarea);
 }
 function limpiarFormulario() {
-    limpiarCampo("nombreTarea");
-    limpiarCampo("fechaCreacionTarea");
-    limpiarCampo("estadoTarea", "E");
-    limpiarCampo("descripcionTarea");
-    limpiarCampo("colorTarea");
+    campo("nombreTarea");
+    campo("fechaCreacionTarea");
+    campo("estadoTarea", "E");
+    campo("descripcionTarea");
+    campo("colorTarea", "primary");
 }
-function limpiarCampo(nombreCampo, valorDefault) {
+function campo(nombreCampo, valorDefault) {
     var campo = document.getElementById(nombreCampo);
     if (valorDefault) {
         campo.value = valorDefault;
